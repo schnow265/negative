@@ -4,10 +4,24 @@ let scene, camera, renderer, stars = [], starSpeed = 0.05, animationFrameId;
 
 const sentences = [
     "Fetching bad designs...",
-    "ERROR: Only bad designs found! - Rebuilding definition..."
+    "ERROR: Only bad designs found! - Rebuilding definition...",
+    "Connecting to alternate Universe...",
+    "SUCCESS! (How do they even have TCP?)"
 ];
 
+// This configures the time needed for one line of text to go from the left side to the right.
+let animationTime = 15000;
+
 let currentSentenceIndex = 0;
+
+let time;
+if (sentences.length == 0) {
+    time = animationTime
+} else {
+    time = sentences.length * animationTime
+}
+
+console.log("Time: " + time, "; Loaded sentences: ", sentences.length);
 
 function init() {
     // Create scene
@@ -57,19 +71,21 @@ function animate() {
 }
 
 function createTextAnimation() {
-    const textElement = document.createElement("div");
-    textElement.classList.add("text");
-    textElement.textContent = sentences[currentSentenceIndex];
+    if (sentences.length != 0) {
+        const textElement = document.createElement("div");
+        textElement.classList.add("text");
+        textElement.textContent = sentences[currentSentenceIndex];
 
-    document.body.appendChild(textElement);
+        document.body.appendChild(textElement);
 
-    // Increase the index and reset after all sentences are shown
-    currentSentenceIndex = (currentSentenceIndex + 1) % sentences.length;
+        // Increase the index and reset after all sentences are shown
+        currentSentenceIndex = (currentSentenceIndex + 1) % sentences.length;
 
-    setTimeout(() => {
-        textElement.remove();
-        createTextAnimation(); // Recurse to show the next sentence
-    }, 15000); // Duration of sentence (matches the animation duration)
+        setTimeout(() => {
+            textElement.remove();
+            createTextAnimation(); // Recurse to show the next sentence
+        }, animationTime); // Duration of sentence (matches the animation duration)
+    }
 }
 
 function startLightspeedAnimation() {
@@ -78,7 +94,7 @@ function startLightspeedAnimation() {
     setTimeout(() => {
         cancelAnimationFrame(animationFrameId);
         window.location.href = 'target/index.html';
-    }, 2000); // Duration of the lightspeed effect
+    }, time); // Duration of the lightspeed effect
 }
 
 function onWindowResize() {
