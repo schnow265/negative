@@ -1,127 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <title>Negative</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
-    <script src="https://cdn.jsdelivr.net/npm/party-js@latest/bundle/party.min.js"></script>
-</head>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@latest/build/three.module.js"
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playwrite+IT+Moderna:wght@100..400&display=swap');
 
+        * {
+            font-family: "JetBrains Mono", serif;
+            font-weight: 400;
+        }
+
+        #signature {
+            font-family: "Playwrite IT Moderna", serif;
+            font-weight: 400;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            gap: 20px;
+        }
+
+        .arrow {
+            width: 100px;
+            height: 100px;
+            animation: colorCycle 3s infinite linear;
+            transform: rotate(180deg);
+        }
+
+        @keyframes colorCycle {
+            0% { fill: red; }
+            14% { fill: orange; }
+            28% { fill: yellow; }
+            42% { fill: green; }
+            57% { fill: blue; }
+            71% { fill: indigo; }
+            85% { fill: violet; }
+            100% { fill: red; }
+        }
+
+        .button {
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+
+        /* Fullscreen canvas for Three.js */
+        canvas {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+    </style>
+</head>
 <body>
     <h1>Hello horrible world!</h1>
     <p>
         This is the overview page for a fictional company which makes a lot of bad
-        decisions in their website design and abour user privacy.
+        decisions in their website design and about user privacy.
         <br />
         I hopefully don't need to say that this site is satire.
     </p>
 
     <p>
-        So, enjoy this brain-damagin experience, and learn how to <i id="signature">not</i> create a website.
+        So, enjoy this brain-damaging experience, and learn how to <i id="signature">not</i> create a website.
         <br>
-    <p id="signature">
-        schnow265
-    </p>
+    <p id="signature">schnow265</p>
 
     <div class="container">
-        <!-- SVG Arrow (⬆️) -->
         <svg class="arrow" viewBox="0 0 24 24">
             <path d="M12 2L5 9h4v8h6V9h4L12 2z"/>
         </svg>
-
-        <!-- Button -->
         <button class="button">ENTER THE GAUNTLET</button>
     </div>
-</body>
 
-</html>
+    <script type="module">
+        import * as THREE from 'three';
 
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Playwrite+IT+Moderna:wght@100..400&display=swap');
+        let scene, camera, renderer, stars = [], starSpeed = 0.05, animationFrameId;
 
-    * {
-        font-family: "JetBrains Mono", serif;
-        font-optical-sizing: auto;
-        font-weight: 400;
-        font-style: normal;
-    }
+        function init() {
+            // Create scene
+            scene = new THREE.Scene();
 
-    #signature {
-        font-family: "Playwrite IT Moderna", serif;
-        font-optical-sizing: auto;
-        font-weight: 400;
-        font-style: normal;
-    }
+            // Create camera
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+            camera.position.z = 5;
 
-    /* Flexbox Centering */
-    .container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        gap: 20px; /* Space between arrow and button */
-    }
+            // Create renderer
+            renderer = new THREE.WebGLRenderer({ alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
 
-    /* SVG Arrow Styling */
-    .arrow {
-        width: 100px; /* Adjust size */
-        height: 100px;
-        animation: colorCycle 3s infinite linear;
-        transform: rotate(180deg);
-    }
+            // Create stars
+            const starGeometry = new THREE.SphereGeometry(0.05, 24, 24);
+            const starMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
 
-    /* Color Cycling Animation */
-    @keyframes colorCycle {
-        0% { fill: red; }
-        14% { fill: orange; }
-        28% { fill: yellow; }
-        42% { fill: green; }
-        57% { fill: blue; }
-        71% { fill: indigo; }
-        85% { fill: violet; }
-        100% { fill: red; }
-    }
+            for (let i = 0; i < 1000; i++) {
+                const star = new THREE.Mesh(starGeometry, starMaterial);
+                resetStar(star);
+                scene.add(star);
+                stars.push(star);
+            }
 
-    /* Button Styling */
-    .button {
-        padding: 15px 30px;
-        font-size: 18px;
-        border: none;
-        background-color: #333;
-        color: white;
-        cursor: pointer;
-        border-radius: 8px;
-    }
-
-    .button:hover {
-        background-color: #555;
-    }
-</style>
-
-<script>
-    // Function to add occasional sparkles around the button
-    function addSparkles() {
-        party.sparkles(document.querySelector('.button'), {
-            count: party.variation.range(5, 15),
-        });
-    }
-    
-    // Function to trigger confetti when the button is clicked
-    function triggerConfetti() {
-        party.confetti(document.querySelector('.button'), {
-            count: party.variation.range(50, 100),
-        });
-    }
-    
-    // Attach event listeners
-    document.addEventListener("DOMContentLoaded", function () {
-        const button = document.querySelector(".button");
-        if (button) {
-            button.addEventListener("mouseover", addSparkles);
-            button.addEventListener("click", triggerConfetti);
+            // Handle window resize
+            window.addEventListener('resize', onWindowResize, false);
         }
-    });
-</script>
+
+        function resetStar(star) {
+            const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
+            star.position.set(x, y, z);
+        }
+
+        function animate() {
+            animationFrameId = requestAnimationFrame(animate);
+
+            stars.forEach(star => {
+                star.position.z += starSpeed;
+                if (star.position.z > camera.position.z) {
+                    resetStar(star);
+                    star.position.z = -100;
+                }
+            });
+
+            renderer.render(scene, camera);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function startLightspeedAnimation() {
+            starSpeed = 2; // Increase speed for lightspeed effect
+
+            setTimeout(() => {
+                cancelAnimationFrame(animationFrameId);
+                window.location.href = 'target/index.html';
+            }, 2000); // Duration of the lightspeed effect
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const button = document.querySelector(".button");
+            button.addEventListener("click", () => {
+                document.body.innerHTML = ""; // Clear content
+                init();
+                animate();
+                startLightspeedAnimation();
+            });
+        });
+    </script>
+</body>
+</html>
