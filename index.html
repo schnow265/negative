@@ -4,13 +4,15 @@
 <head>
     <meta charset="UTF-8" />
     <title>Negative</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <script src="https://cdn.jsdelivr.net/npm/party-js@latest/bundle/party.min.js"></script>
 </head>
 
 <body>
     <h1>Hello horrible world!</h1>
     <p>
-        This is the page for a fictional company which makes a lot of bad
-        decisions in their website design.
+        This is the overview page for a fictional company which makes a lot of bad
+        decisions in their website design and abour user privacy.
         <br />
         I hopefully don't need to say that this site is satire.
     </p>
@@ -18,21 +20,108 @@
     <p>
         So, enjoy this brain-damagin experience, and learn how to <i id="signature">not</i> create a website.
         <br>
-        <p id="signature">
-            schnow265
-        </p>
+    <p id="signature">
+        schnow265
     </p>
 
+    <div class="container">
+        <!-- SVG Arrow (⬆️) -->
+        <svg class="arrow" viewBox="0 0 24 24">
+            <path d="M12 2L5 9h4v8h6V9h4L12 2z"/>
+        </svg>
+
+        <!-- Button -->
+        <button class="button">ENTER THE GAUNTLET</button>
+    </div>
 </body>
 
 </html>
 
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Playwrite+IT+Moderna:wght@100..400&display=swap');
+
+    * {
+        font-family: "JetBrains Mono", serif;
+        font-optical-sizing: auto;
+        font-weight: 400;
+        font-style: normal;
+    }
+
     #signature {
         font-family: "Playwrite IT Moderna", serif;
         font-optical-sizing: auto;
         font-weight: 400;
         font-style: normal;
     }
+
+    /* Flexbox Centering */
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        gap: 20px; /* Space between arrow and button */
+    }
+
+    /* SVG Arrow Styling */
+    .arrow {
+        width: 100px; /* Adjust size */
+        height: 100px;
+        animation: colorCycle 3s infinite linear;
+        transform: rotate(180deg);
+    }
+
+    /* Color Cycling Animation */
+    @keyframes colorCycle {
+        0% { fill: red; }
+        14% { fill: orange; }
+        28% { fill: yellow; }
+        42% { fill: green; }
+        57% { fill: blue; }
+        71% { fill: indigo; }
+        85% { fill: violet; }
+        100% { fill: red; }
+    }
+
+    /* Button Styling */
+    .button {
+        padding: 15px 30px;
+        font-size: 18px;
+        border: none;
+        background-color: #333;
+        color: white;
+        cursor: pointer;
+        border-radius: 8px;
+    }
+
+    .button:hover {
+        background-color: #555;
+    }
 </style>
+
+<script>
+    // Function to add occasional sparkles around the button
+    function addSparkles() {
+        party.sparkles(document.querySelector('.button'), {
+            count: party.variation.range(5, 15),
+        });
+    }
+    
+    // Function to trigger confetti when the button is clicked
+    function triggerConfetti() {
+        party.confetti(document.querySelector('.button'), {
+            count: party.variation.range(50, 100),
+        });
+    }
+    
+    // Attach event listeners
+    document.addEventListener("DOMContentLoaded", function () {
+        const button = document.querySelector(".button");
+        if (button) {
+            button.addEventListener("mouseover", addSparkles);
+            button.addEventListener("click", triggerConfetti);
+        }
+    });
+</script>
