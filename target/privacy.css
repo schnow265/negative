@@ -1,0 +1,188 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: linear-gradient(45deg, #ff00ff, #ffcc00);
+    color: white;
+    text-align: center;
+    animation: backgroundChange 5s infinite alternate;
+}
+
+h1, h2, p {
+    animation: flashingText 1s infinite alternate;
+}
+
+header {
+    margin-top: 50px;
+    animation: bounceHeader 1s ease infinite;
+}
+
+.blink {
+    color: red;
+    font-size: 3em;
+    animation: blinkText 0.5s step-end infinite;
+}
+
+.rotate {
+    font-size: 2em;
+    animation: rotateText 3s linear infinite;
+}
+
+.scroll-text {
+    font-size: 1.5em;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: scroll 10s linear infinite;
+}
+
+#intro {
+    margin-top: 50px;
+    animation: fadeIn 3s ease-in;
+}
+
+#daten-erhebung, #cookies, #kontakt {
+    margin-top: 60px;
+}
+
+.scale {
+    animation: scaleText 2s infinite alternate;
+}
+
+.flash {
+    animation: flashText 0.5s infinite alternate;
+}
+
+.neon {
+    text-shadow: 0 0 5px #ffcc00, 0 0 10px #ffcc00, 0 0 20px #ffcc00;
+}
+
+.shake {
+    animation: shakeText 0.5s infinite alternate;
+}
+
+.glow {
+    color: #ff00ff;
+    font-size: 1.3em;
+    text-shadow: 0 0 20px #ff00ff, 0 0 30px #ff00ff;
+}
+
+button {
+    background-color: #ff00ff;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.5em;
+    cursor: pointer;
+    border-radius: 50px;
+    animation: bounceButton 0.5s infinite alternate;
+}
+
+button:hover {
+    background-color: #ffcc00;
+}
+
+footer {
+    font-size: 1.2em;
+    margin-top: 80px;
+    animation: footerMove 5s ease-in-out infinite alternate;
+}
+
+@keyframes blinkText {
+    50% {
+        opacity: 0;
+    }
+}
+
+@keyframes rotateText {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes backgroundChange {
+    0% {
+        background: linear-gradient(45deg, #ff00ff, #ffcc00);
+    }
+    100% {
+        background: linear-gradient(45deg, #00ff00, #00ccff);
+    }
+}
+
+@keyframes flashingText {
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes scaleText {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.5);
+    }
+}
+
+@keyframes flashText {
+    50% {
+        color: yellow;
+    }
+}
+
+@keyframes shakeText {
+    0% {
+        transform: translateX(-5px);
+    }
+    100% {
+        transform: translateX(5px);
+    }
+}
+
+@keyframes bounceHeader {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounceButton {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes footerMove {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(20px);
+    }
+}
